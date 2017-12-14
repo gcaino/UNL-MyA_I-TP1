@@ -2,6 +2,7 @@
 #define BACKGROUND_H
 // ----------------------------------------------------------------------------
 #include "DrawableObject.h"
+#include <SFML\Graphics.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -12,6 +13,8 @@ class Background : public DrawableObject
 public:
 	Background();
 	~Background();
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }

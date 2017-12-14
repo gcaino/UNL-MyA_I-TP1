@@ -11,6 +11,7 @@ class Player
 private:
 	Crosshair	m_crosshair;
 
+
 public:
 	Player();
 	~Player();

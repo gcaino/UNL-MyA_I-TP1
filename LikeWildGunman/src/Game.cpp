@@ -16,18 +16,21 @@ Game::Game()
 	m_window.setFramerateLimit(FPS);
 	m_window.setMouseCursorVisible(false);
 
-	m_player = new Player();
+	m_background	= new Background();
+	m_player		= new Player();
 
 	addDrawableObjets();
 }
 
 Game::~Game()
 {
+	delete m_background;
 	delete m_player;
 }
 
 void Game::addDrawableObjets()
 {
+	m_drawableObjects.push_back(m_background);
 	m_drawableObjects.push_back(m_player->getCrooshair());
 }
 

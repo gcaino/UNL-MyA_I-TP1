@@ -12,6 +12,7 @@ const uint_t	WINDOW_WIDTH_MAX = 800;
 const uint_t	WINDOW_HEIGHT_MAX = 600;
 
 const std::string pathCrooshairImage = "assets/crosshair.png";
+const std::string pathBackgroundImage = "assets/background.png";
 
 // ----------------------------------------------------------------------------
 }

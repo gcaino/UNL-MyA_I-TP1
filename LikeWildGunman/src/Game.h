@@ -2,6 +2,7 @@
 #define GAME_H
 // ----------------------------------------------------------------------------
 #include "Constants.h"
+#include "Background.h"
 #include "Player.h"
 #include "DrawableObject.h"
 #include <SFML\Graphics.hpp>
@@ -24,6 +25,7 @@ private:
 	sf::Text			m_text;
 	sf::Event			m_event;
 
+	Background*			m_background;
 	Player*				m_player;
 
 	std::vector<DrawableObject*>			m_drawableObjects;
