@@ -2,7 +2,10 @@
 #define GAME_H
 // ----------------------------------------------------------------------------
 #include "Constants.h"
+#include "Player.h"
+#include "DrawableObject.h"
 #include <SFML\Graphics.hpp>
+#include <vector>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -20,14 +23,13 @@ private:
 	sf::Font			m_font;
 	sf::Text			m_text;
 	sf::Event			m_event;
-	sf::Clock			m_clock;
-	sf::Time			m_deltaTime;
 
-	sf::CircleShape		m_shape;
-	
-	//std::vector<DrawableObject>				m_gameObjects;
-	//std::vector<DrawableObject>::iterator	m_it;
+	Player*				m_player;
 
+	std::vector<DrawableObject*>			m_drawableObjects;
+	std::vector<DrawableObject*>::iterator	m_it;
+
+	void addDrawableObjets();
 	void handlerInput();
 	void update();
 	void draw();

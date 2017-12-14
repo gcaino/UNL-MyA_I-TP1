@@ -1,10 +1,20 @@
-#pragma once
+#ifndef BACKGROUND_H
+#define BACKGROUND_H
+// ----------------------------------------------------------------------------
 #include "DrawableObject.h"
-class Background :
-	public DrawableObject
+// ----------------------------------------------------------------------------
+namespace lwgm
+{
+// ----------------------------------------------------------------------------
+#include "DrawableObject.h"
+class Background : public DrawableObject
 {
 public:
 	Background();
 	~Background();
 };
+// ----------------------------------------------------------------------------
+}
+// ----------------------------------------------------------------------------
+#endif // BACKGROUND_H
 

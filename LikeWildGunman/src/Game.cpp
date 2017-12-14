@@ -1,6 +1,7 @@
 #include "Game.h"
 // ----------------------------------------------------------------------------
 #include "Constants.h"
+#include "Crosshair.h"
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -13,19 +14,25 @@ Game::Game()
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH_MAX, WINDOW_HEIGHT_MAX),"SFML - Like Wild Gunman");
 	m_window.setFramerateLimit(FPS);
-	//m_window.setMouseCursorVisible(false);
+	m_window.setMouseCursorVisible(false);
 
-	m_shape.setRadius(100.f);
-	m_shape.setFillColor(sf::Color::Green);
+	m_player = new Player();
+
+	addDrawableObjets();
 }
 
 Game::~Game()
 {
+	delete m_player;
+}
+
+void Game::addDrawableObjets()
+{
+	m_drawableObjects.push_back(m_player->getCrooshair());
 }
 
 void Game::loop()
 {
-
 	while (m_running)
 	{
 		handlerInput();
@@ -45,13 +52,16 @@ void Game::handlerInput()
 
 void Game::update()
 {
-
+	m_player->update(m_window);
 }
 
 void Game::draw()
 {
-	m_window.clear();
-	m_window.draw(m_shape);
+	m_window.clear(sf::Color::White);
+	
+	for (m_it = m_drawableObjects.begin(); m_it != m_drawableObjects.end(); m_it++)
+		m_window.draw((*m_it)->getSprite(), sf::RenderStates::Default);
+
 	m_window.display();
 }
 // ----------------------------------------------------------------------------
