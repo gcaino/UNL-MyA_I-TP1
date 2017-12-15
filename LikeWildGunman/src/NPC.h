@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 #include "DrawableObject.h"
 #include "Constants.h"
+#include "Player.h"
 #include <SFML\Graphics.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
@@ -23,10 +24,17 @@ private:
 	bool			m_active;
 	sf::Time		m_activeTime;
 	sf::Time		m_elapsedActiveTime;
+	sf::Time		m_elapsedTimeShot;
+	sf::Time		m_speedShot;
+
+	sf::Font		m_font;
+	sf::Text		m_textShot;
+	bool			m_showText;
 
 	void setTexture();
 	void setType();
 	void showNPC(sf::Time elapsedTime);
+	void setText();
 
 public:
 	NPC();
@@ -37,8 +45,12 @@ public:
 	void setActive(bool active) { m_active = active; }
 	uint_t getPoints() const { return m_points; }
 	Type getType() const { return m_type; }
+	sf::Text getTextShot() const { return m_textShot; }
+	bool getShowText() const { return m_showText; }
 
-	void update(sf::Time elapsedTime);
+
+	void shoot(sf::Time elapsedTime, Player& player);
+	void update(sf::Time elapsedTime, Player& player);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------

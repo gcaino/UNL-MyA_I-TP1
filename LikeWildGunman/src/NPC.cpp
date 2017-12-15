@@ -1,6 +1,7 @@
 #include "NPC.h"
 // ----------------------------------------------------------------------------
 #include "Constants.h"
+#include "Player.h"
 #include <SFML\Graphics.hpp>
 #include <cstdlib>
 // ----------------------------------------------------------------------------
@@ -12,9 +13,14 @@ NPC::NPC()
 	, m_active(false)
 	, m_activeTime(sf::seconds(4.f))
 	, m_elapsedActiveTime(sf::Time::Zero)
+	, m_speedShot(sf::seconds(3.f))
+	, m_elapsedTimeShot(sf::Time::Zero)
+	, m_showText(false)
 {
 	setType();
 	setTexture();
+	if (m_type == Type::TYPE_BANDIT)
+		setText();
 }
 
 NPC::NPC(Type type)
@@ -23,8 +29,13 @@ NPC::NPC(Type type)
 	, m_activeTime(sf::seconds(4.f))
 	, m_elapsedActiveTime(sf::Time::Zero)
 	, m_type(type)
+	, m_speedShot(sf::seconds(3.f))
+	, m_elapsedTimeShot(sf::Time::Zero)
+	, m_showText(false)
 {
 	setTexture();
+	if (m_type == Type::TYPE_BANDIT)
+		setText();
 }
 
 NPC::~NPC()
@@ -70,6 +81,17 @@ void NPC::setType()
 		m_type = TYPE_INNOCENT;
 }
 
+void NPC::setText()
+{
+	m_font.loadFromFile(pathFont);
+	m_textShot.setFont(m_font);
+	m_textShot.setPosition(sf::Vector2f());
+	m_textShot.setFillColor(sf::Color::White);
+	m_textShot.setStyle(sf::Text::Bold);
+	m_textShot.setString("BANNG!");
+	m_textShot.setCharacterSize(20);
+}
+
 void NPC::showNPC(sf::Time elapsedTime)
 {
 	m_elapsedActiveTime += elapsedTime;
@@ -80,16 +102,43 @@ void NPC::showNPC(sf::Time elapsedTime)
 	}
 }
 
-void NPC::update(sf::Time elapsedTime)
+void NPC::shoot(sf::Time elapsedTime, Player& player)
+{
+	m_elapsedTimeShot += elapsedTime;
+	if (m_elapsedTimeShot.asSeconds() > m_speedShot.asSeconds())
+	{
+		player.loseLife();
+		m_showText = true;
+		m_textShot.setPosition(m_sprite.getPosition().x - (m_sprite.getGlobalBounds().width * 0.5f),
+			m_sprite.getPosition().y - (m_sprite.getGlobalBounds().height * 1.3f));
+		m_elapsedTimeShot = sf::Time::Zero;
+	}
+}
+
+void NPC::update(sf::Time elapsedTime, Player& player)
 {
 	if (m_active)
+	{
 		showNPC(elapsedTime);
+		if (m_type == Type::TYPE_BANDIT)
+			shoot(elapsedTime, player);
+	}
+	else
+	{
+		if (m_showText)
+			m_showText = false;
+	}
+		
 }
 
 void NPC::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (m_active)
+	{ 
 		target.draw(m_sprite);
+		if (m_showText)
+			target.draw(m_textShot);
+	}
 }
 // ----------------------------------------------------------------------------
 }

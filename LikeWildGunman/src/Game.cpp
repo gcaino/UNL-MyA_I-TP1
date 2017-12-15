@@ -33,7 +33,7 @@ Game::Game()
 	}
 	
 	m_hud = new HUD();
-	addDrawableObjects();
+	//addDrawableObjects();
 	initSpawnPoints();
 }
 
@@ -184,7 +184,7 @@ void Game::update(sf::Time	elapsedTime)
 	spawnNPC(elapsedTime);
 
 	for (size_t i = 0; i < MAX_NPC; i++)
-		m_npcs[i]->update(elapsedTime);
+		m_npcs[i]->update(elapsedTime, *m_player);
 
 	releaseSpawnPoints();
 
@@ -198,8 +198,16 @@ void Game::draw()
 {
 	m_window.clear(sf::Color::White);
 	
-	for (m_it = m_drawableObjects.begin(); m_it != m_drawableObjects.end(); m_it++)
-		m_window.draw((*m_it)->getSprite(), sf::RenderStates::Default);
+	// Funciona pero me quita flexibilidad a la hora de mostrar textos junto a los sprites
+	/*for (m_it = m_drawableObjects.begin(); m_it != m_drawableObjects.end(); m_it++)
+		m_window.draw((*m_it)->getSprite(), sf::RenderStates::Default);*/
+
+	m_background->draw(m_window, sf::RenderStates::Default);
+	
+	for (size_t index = 0; index < MAX_NPC; index++)
+		m_npcs[index]->draw(m_window, sf::RenderStates::Default);
+
+	m_player->getCrooshair()->draw(m_window, sf::RenderStates::Default);
 
 	for (size_t i = 0; i < m_hud->getTexts().size(); i++)
 		m_window.draw(*m_hud->getTexts().at(i));
