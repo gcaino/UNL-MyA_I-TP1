@@ -17,6 +17,12 @@ const std::string pathTagetsImage = "assets/textures/targets.png";
 
 const std::string pathFont = "assets/fonts/PaytoneOne-Regular.ttf";
 
+const std::string path9mmGunshotAudio = "assets/audio/9mm-gunshot.ogg";
+const std::string pathBulletWhizzingAudio = "assets/audio/bullet-whizzing.ogg";
+const std::string pathM1GunshotAudio = "assets/audio/m1-garand-gunshot.ogg";
+const std::string pathPoliceChatterAudio = "assets/audio/police-scanner-chatter.ogg";
+const std::string pathShotgunReloadAudio = "assets/audio/shotgun-reload.ogg";
+
 // ----------------------------------------------------------------------------
 }
 // ----------------------------------------------------------------------------

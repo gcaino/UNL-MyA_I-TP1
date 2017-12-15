@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "Player.h"
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -30,6 +31,9 @@ private:
 	sf::Font		m_font;
 	sf::Text		m_textShot;
 	bool			m_showText;
+
+	sf::SoundBuffer m_gunshotSoundBuffer;
+	sf::Sound		m_gunshotSound;
 
 	void setTexture();
 	void setType();

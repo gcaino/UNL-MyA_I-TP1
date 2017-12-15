@@ -1,6 +1,7 @@
 #include "Player.h"
 // ----------------------------------------------------------------------------
 #include "Constants.h"
+#include <SFML/Audio.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -15,6 +16,14 @@ Player::Player()
 	, m_speedShot(sf::seconds(0.5f))
 	, m_elapsedTimeShot(sf::Time::Zero)
 {
+	m_gunshotSoundBuffer.loadFromFile(path9mmGunshotAudio);
+	m_gunshotSound.setBuffer(m_gunshotSoundBuffer);
+
+	m_reloadSoundBuffer.loadFromFile(pathShotgunReloadAudio);
+	m_reloadSound.setBuffer(m_reloadSoundBuffer);
+
+	m_whizzingSoundBuffer.loadFromFile(pathBulletWhizzingAudio);
+	m_whizzingSound.setBuffer(m_whizzingSoundBuffer);
 }
 
 Player::~Player()
@@ -66,6 +75,7 @@ void Player::subtractBullet()
 
 void Player::reloadBullets()
 {
+	m_reloadSound.play();
 	m_bullets = MAX_BULLETS;
 }
 

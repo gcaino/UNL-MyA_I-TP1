@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------
 #include "Constants.h"
 #include "Crosshair.h"
+#include <SFML\Audio.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
@@ -22,6 +23,13 @@ private:
 	sf::Time	m_elapsedTimeShot;
 	sf::Time	m_speedShot;
 
+	sf::SoundBuffer m_gunshotSoundBuffer;
+	sf::SoundBuffer m_reloadSoundBuffer;
+	sf::SoundBuffer m_whizzingSoundBuffer;
+	sf::Sound		m_gunshotSound;
+	sf::Sound		m_reloadSound;
+	sf::Sound		m_whizzingSound;
+
 	void shoot();
 	void subtractBullet();
 	void reloadBullets();
@@ -39,6 +47,8 @@ public:
 	void subtractScore(uint_t points);
 	void loseLife();
 	void obtainLife();
+	sf::Sound& getGunshotSound() { return m_gunshotSound; }
+	sf::Sound& getWhizzingSound() { return m_whizzingSound; }
 
 	void handlerInput();
 	void update(sf::Time elapsedTime, const sf::RenderWindow& window);

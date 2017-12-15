@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "Player.h"
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <cstdlib>
 // ----------------------------------------------------------------------------
 namespace lwgm
@@ -21,6 +22,9 @@ NPC::NPC()
 	setTexture();
 	if (m_type == Type::TYPE_BANDIT)
 		setText();
+
+	m_gunshotSoundBuffer.loadFromFile(pathM1GunshotAudio);
+	m_gunshotSound.setBuffer(m_gunshotSoundBuffer);
 }
 
 NPC::NPC(Type type)
@@ -36,6 +40,9 @@ NPC::NPC(Type type)
 	setTexture();
 	if (m_type == Type::TYPE_BANDIT)
 		setText();
+
+	m_gunshotSoundBuffer.loadFromFile(pathM1GunshotAudio);
+	m_gunshotSound.setBuffer(m_gunshotSoundBuffer);
 }
 
 NPC::~NPC()
@@ -108,6 +115,7 @@ void NPC::shoot(sf::Time elapsedTime, Player& player)
 	if (m_elapsedTimeShot.asSeconds() > m_speedShot.asSeconds())
 	{
 		player.loseLife();
+		m_gunshotSound.play();
 		m_showText = true;
 		m_textShot.setPosition(m_sprite.getPosition().x - (m_sprite.getGlobalBounds().width * 0.5f),
 			m_sprite.getPosition().y - (m_sprite.getGlobalBounds().height * 1.3f));

@@ -2,6 +2,7 @@
 // ----------------------------------------------------------------------------
 #include "Constants.h"
 #include "Crosshair.h"
+#include <SFML\Audio.hpp>
 #include <string>
 // ----------------------------------------------------------------------------
 namespace lwgm
@@ -138,6 +139,7 @@ void Game::checkCollision()
 				if (m_npcs[index]->getSprite().getGlobalBounds().contains(m_player->getCrooshair()->getPosition()))
 				{
 					m_npcs[index]->setActive(false);
+					m_player->getGunshotSound().play();
 					if (m_npcs[index]->getType() == Type::TYPE_BANDIT)
 					{
 						m_player->addScore(m_npcs[index]->getPoints());
@@ -147,6 +149,10 @@ void Game::checkCollision()
 						m_player->subtractScore(m_npcs[index]->getPoints());
 						m_player->loseLife();
 					}
+				}
+				else
+				{
+					m_player->getWhizzingSound().play();
 				}
 			}
 		}
