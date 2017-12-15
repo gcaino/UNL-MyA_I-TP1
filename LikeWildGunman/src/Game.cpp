@@ -11,28 +11,43 @@ Game::Game()
 	: m_running(true)
 	, m_score(0)
 	, m_pause(false)
-	, FPS(60)
+	, m_spawnTime(sf::seconds(3.f))
+	, m_elapsedSpawnTime(sf::Time::Zero)
+	, m_spawnPoints { false, sf::Vector2f() }
 {
-	m_window.create(sf::VideoMode(WINDOW_WIDTH_MAX, WINDOW_HEIGHT_MAX),"SFML - Like Wild Gunman");
+	m_window.create(sf::VideoMode(WINDOW_WIDTH_MAX, WINDOW_HEIGHT_MAX),"M&A I - TP 01");
 	m_window.setFramerateLimit(FPS);
 	m_window.setMouseCursorVisible(false);
 
 	m_background	= new Background();
 	m_player		= new Player();
+	
+	for (size_t i = 0; i < MAX_NPC; i++)
+		m_npcs[i] = new NPC();
+	
 	m_hud			= new HUD();
 	addDrawableObjects();
+	initSpawnPoints();
 }
 
 Game::~Game()
 {
 	delete m_background;
 	delete m_player;
+
+	for (size_t i = 0; i < MAX_NPC; i++)
+		delete m_npcs[i];
+
 	delete m_hud;
 }
 
 void Game::addDrawableObjects()
 {
 	m_drawableObjects.push_back(m_background);
+
+	for (size_t i = 0; i < MAX_NPC; i++)
+		m_drawableObjects.push_back(m_npcs[i]);
+
 	m_drawableObjects.push_back(m_player->getCrooshair());
 }
 
@@ -49,6 +64,59 @@ void Game::loop()
 		}
 
 		draw();
+	}
+}
+
+void Game::initSpawnPoints()
+{
+	m_spawnPoints[0].m_position = sf::Vector2f(120.f, 212.f);
+	m_spawnPoints[1].m_position = sf::Vector2f(120.f, 436.f);
+	m_spawnPoints[2].m_position = sf::Vector2f(510.f, 210.f);
+	m_spawnPoints[3].m_position = sf::Vector2f(510.f, 482.f);
+	m_spawnPoints[4].m_position = sf::Vector2f(970.f, 212.f);
+	m_spawnPoints[5].m_position = sf::Vector2f(970.f, 436.f);
+}
+
+void Game::spawnNPC(sf::Time elapsedTime)
+{
+	m_elapsedSpawnTime += elapsedTime;
+	if (m_elapsedSpawnTime > m_spawnTime)
+	{
+		uint_t randomPoint = rand() % MAX_SPAWN_POINTS;
+		while (m_spawnPoints[randomPoint].m_occupied)
+		{
+			randomPoint = rand() % MAX_SPAWN_POINTS;
+		}
+
+		uint_t randomIndex = rand() % MAX_NPC;
+		while (m_npcs[randomIndex]->isActive())
+		{
+			randomIndex = rand() % MAX_SPAWN_POINTS;
+		}
+
+		m_npcs[randomIndex]->setActive(true);
+		m_npcs[randomIndex]->getSprite().setPosition(m_spawnPoints[randomPoint].m_position);
+		m_spawnPoints[randomPoint].m_occupied = true;
+		m_elapsedSpawnTime = sf::Time::Zero;
+	}
+}
+
+void Game::releaseSpawnPoints()
+{
+	for (size_t point = 0; point < MAX_SPAWN_POINTS; point++)
+	{
+		if (m_spawnPoints[point].m_occupied)
+		{
+			for (size_t index = 0; index < MAX_NPC; index++)
+			{
+				if ((!m_npcs[index]->isActive()) && 
+					(m_npcs[index]->getSprite().getPosition() == m_spawnPoints[point].m_position))
+				{
+					m_npcs[index]->getSprite().setPosition(sf::Vector2f());
+					m_spawnPoints[point].m_occupied = false;
+				}
+			}
+		}
 	}
 }
 
@@ -74,6 +142,13 @@ void Game::handlerInput()
 
 void Game::update(sf::Time	elapsedTime)
 {
+	spawnNPC(elapsedTime);
+
+	for (size_t i = 0; i < MAX_NPC; i++)
+		m_npcs[i]->update(elapsedTime);
+
+	releaseSpawnPoints();
+
 	m_player->update(elapsedTime, m_window);
 	m_hud->updateTexts(*m_player);
 }

@@ -13,6 +13,7 @@ const uint_t	WINDOW_HEIGHT_MAX = 700;
 
 const std::string pathCrooshairImage = "assets/textures/crosshair.png";
 const std::string pathBackgroundImage = "assets/textures/background-hud.png";
+const std::string pathTagetsImage = "assets/textures/targets.png";
 
 const std::string pathFont = "assets/fonts/PaytoneOne-Regular.ttf";
 

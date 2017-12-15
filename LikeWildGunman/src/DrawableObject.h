@@ -16,7 +16,7 @@ public:
 	DrawableObject();
 	virtual ~DrawableObject();
 
-	sf::Sprite	getSprite() const { return m_sprite; }
+	sf::Sprite&	getSprite()  { return m_sprite; }
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
