@@ -11,7 +11,7 @@ Player::Player()
 	, m_bullets(MAX_BULLETS)
 	, m_lifes(MAX_LIFES)
 	, m_score(0)
-	, m_isShooting(false)
+	, m_shooting(false)
 	, m_speedShot(sf::seconds(0.5f))
 	, m_elapsedTimeShot(sf::Time::Zero)
 {
@@ -23,10 +23,10 @@ Player::~Player()
 
 void Player::handlerInput()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !m_isShooting)
-		m_isShooting = true;
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !m_shooting)
+		m_shooting = true;
 	else
-		m_isShooting = false;
+		m_shooting = false;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		reloadBullets();
@@ -37,10 +37,10 @@ void Player::update(sf::Time elapsedTime, const sf::RenderWindow& window)
 	m_crosshair.move(window);
 
 	m_elapsedTimeShot += elapsedTime;
-	if (m_isShooting && (m_elapsedTimeShot.asSeconds() > m_speedShot.asSeconds()))
+	if (m_shooting && (m_elapsedTimeShot.asSeconds() > m_speedShot.asSeconds()))
 	{
 		shoot();
-		m_isShooting = false;
+		m_shooting = false;
 		m_elapsedTimeShot = sf::Time::Zero;
 	}
 }

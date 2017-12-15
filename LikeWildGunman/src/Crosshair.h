@@ -16,6 +16,7 @@ public:
 	Crosshair();
 	~Crosshair();
 
+	sf::Vector2f getPosition() const { return m_position; }
 	void move(const sf::RenderWindow& window);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

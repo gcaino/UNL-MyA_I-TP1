@@ -51,6 +51,7 @@ private:
 	void initSpawnPoints();
 	void spawnNPC(sf::Time	elapsedTime);
 	void releaseSpawnPoints();
+	void checkCollision();
 	void handlerInput();
 	void update(sf::Time elapsedTime);
 	void draw();

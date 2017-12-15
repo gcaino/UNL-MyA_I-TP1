@@ -120,6 +120,31 @@ void Game::releaseSpawnPoints()
 	}
 }
 
+void Game::checkCollision()
+{
+	if (m_player->isShooting())
+	{
+		for (size_t index = 0; index < MAX_NPC; index++)
+		{
+			if (m_npcs[index]->isActive())
+			{
+				if (m_npcs[index]->getSprite().getGlobalBounds().contains(m_player->getCrooshair()->getPosition()))
+				{
+					m_npcs[index]->setActive(false);
+					if (m_npcs[index]->getType() == Type::TYPE_BANDIT)
+					{
+						m_player->addScore(m_npcs[index]->getPoints());
+					}
+					else if (m_npcs[index]->getType() == Type::TYPE_INNOCENT)
+					{
+						m_player->loseLife();
+					}
+				}
+			}
+		}
+	}
+}
+
 void Game::handlerInput()
 {
 	while (m_window.pollEvent(m_event))
@@ -150,6 +175,7 @@ void Game::update(sf::Time	elapsedTime)
 	releaseSpawnPoints();
 
 	m_player->update(elapsedTime, m_window);
+	checkCollision();
 	m_hud->updateTexts(*m_player);
 }
 
