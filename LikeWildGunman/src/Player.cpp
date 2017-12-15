@@ -7,7 +7,7 @@ namespace lwgm
 // ----------------------------------------------------------------------------
 Player::Player()
 	: MAX_BULLETS(10)
-	, MAX_LIFES(5)
+	, MAX_LIFES(3)
 	, m_bullets(MAX_BULLETS)
 	, m_lifes(MAX_LIFES)
 	, m_score(0)
@@ -23,11 +23,17 @@ Player::~Player()
 
 void Player::handlerInput()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !m_shooting)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+		!m_shooting &&
+		m_bullets > 0)
+	{
 		m_shooting = true;
+	}
 	else
+	{
 		m_shooting = false;
-
+	}
+		
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		reloadBullets();
 }
@@ -79,6 +85,14 @@ void Player::obtainLife()
 void Player::addScore(uint_t points)
 {
 	m_score += points;
+}
+
+void Player::subtractScore(uint_t points)
+{
+	if (m_score == 0)
+		return;
+
+	m_score -= points;
 }
 // ----------------------------------------------------------------------------
 }

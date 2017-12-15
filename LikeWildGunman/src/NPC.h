@@ -30,6 +30,7 @@ private:
 
 public:
 	NPC();
+	NPC(Type type);
 	~NPC();
 
 	bool isActive() const { return m_active; }

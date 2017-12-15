@@ -27,6 +27,7 @@ class Game
 {
 private:
 	bool				m_running;
+	bool				m_gameOver;
 	uint_t				m_score;
 	bool				m_pause;
 
@@ -52,6 +53,7 @@ private:
 	void spawnNPC(sf::Time	elapsedTime);
 	void releaseSpawnPoints();
 	void checkCollision();
+	void checkGameCondition();
 	void handlerInput();
 	void update(sf::Time elapsedTime);
 	void draw();

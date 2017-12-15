@@ -9,6 +9,7 @@ namespace lwgm
 // ----------------------------------------------------------------------------
 Game::Game()
 	: m_running(true)
+	, m_gameOver(false)
 	, m_score(0)
 	, m_pause(false)
 	, m_spawnTime(sf::seconds(3.f))
@@ -23,9 +24,15 @@ Game::Game()
 	m_player		= new Player();
 	
 	for (size_t i = 0; i < MAX_NPC; i++)
-		m_npcs[i] = new NPC();
+	{
+		// 2 Inocentes y 4 Bandidos, de esa manera evitamos que por probabilidad salgan todos de un solo tipo
+		if (i == 1 || i == 4)	
+			m_npcs[i] = new NPC(Type::TYPE_INNOCENT);
+		else
+			m_npcs[i] = new NPC(Type::TYPE_BANDIT);
+	}
 	
-	m_hud			= new HUD();
+	m_hud = new HUD();
 	addDrawableObjects();
 	initSpawnPoints();
 }
@@ -137,12 +144,19 @@ void Game::checkCollision()
 					}
 					else if (m_npcs[index]->getType() == Type::TYPE_INNOCENT)
 					{
+						m_player->subtractScore(m_npcs[index]->getPoints());
 						m_player->loseLife();
 					}
 				}
 			}
 		}
 	}
+}
+
+void Game::checkGameCondition()
+{
+	if (m_player->getLifes() == 0)
+		m_gameOver = true;
 }
 
 void Game::handlerInput()
@@ -176,6 +190,7 @@ void Game::update(sf::Time	elapsedTime)
 
 	m_player->update(elapsedTime, m_window);
 	checkCollision();
+	checkGameCondition();
 	m_hud->updateTexts(*m_player);
 }
 

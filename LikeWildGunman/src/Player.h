@@ -36,6 +36,7 @@ public:
 	uint_t getLifes() const { return m_lifes; }
 	uint_t getScore() const { return m_score; }
 	void addScore(uint_t points);
+	void subtractScore(uint_t points);
 	void loseLife();
 	void obtainLife();
 

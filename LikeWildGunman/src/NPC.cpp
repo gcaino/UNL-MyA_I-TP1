@@ -8,12 +8,22 @@ namespace lwgm
 {
 // ----------------------------------------------------------------------------
 NPC::NPC()
-	: m_points(1)
+	: m_points(10)
 	, m_active(false)
 	, m_activeTime(sf::seconds(4.f))
 	, m_elapsedActiveTime(sf::Time::Zero)
 {
 	setType();
+	setTexture();
+}
+
+NPC::NPC(Type type)
+	: m_points(10)
+	, m_active(false)
+	, m_activeTime(sf::seconds(4.f))
+	, m_elapsedActiveTime(sf::Time::Zero)
+	, m_type(type)
+{
 	setTexture();
 }
 
@@ -53,8 +63,8 @@ void NPC::setTexture()
 
 void NPC::setType()
 {
-	uint_t randomType = rand() % TYPE_TOTAL;
-	if (randomType == 0)
+	uint_t probability = rand() % 10 + 1; // Probabilidad entre 1 y 10
+	if (probability > 4)
 		m_type = TYPE_BANDIT;
 	else
 		m_type = TYPE_INNOCENT;
