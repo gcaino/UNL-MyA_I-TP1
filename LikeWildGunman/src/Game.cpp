@@ -42,8 +42,11 @@ void Game::loop()
 	{
 		handlerInput();
 
-		m_elapsedTime = m_clock.restart();
-		update(m_elapsedTime);
+		if (!m_pause)
+		{
+			m_elapsedTime = m_clock.restart();
+			update(m_elapsedTime);
+		}
 
 		draw();
 	}
@@ -53,11 +56,20 @@ void Game::handlerInput()
 {
 	while (m_window.pollEvent(m_event))
 	{
-		if (m_event.type == sf::Event::Closed || 
-			(m_event.type == sf::Event::KeyPressed && m_event.key.code == sf::Keyboard::Escape))	
+		if (m_event.type == sf::Event::Closed)	
 			m_running = false;
+
+		if (m_event.type == sf::Event::KeyPressed)
+		{
+			if (m_event.key.code == sf::Keyboard::P)
+				m_pause = !m_pause;
+			else if (m_event.key.code == sf::Keyboard::Escape)
+				m_running = false;
+		}
 	}
-	m_player->handlerInput();
+
+	if (!m_pause)
+		m_player->handlerInput();
 }
 
 void Game::update(sf::Time	elapsedTime)
