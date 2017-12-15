@@ -24,6 +24,7 @@
     <ClInclude Include="..\src\Crosshair.h" />
     <ClInclude Include="..\src\DrawableObject.h" />
     <ClInclude Include="..\src\Game.h" />
+    <ClInclude Include="..\src\HUD.h" />
     <ClInclude Include="..\src\NPC.h" />
     <ClInclude Include="..\src\Player.h" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     <ClCompile Include="..\src\Crosshair.cpp" />
     <ClCompile Include="..\src\DrawableObject.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\HUD.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
     <ClCompile Include="..\src\NPC.cpp" />
     <ClCompile Include="..\src\Player.cpp" />

@@ -11,6 +11,7 @@ Crosshair::Crosshair()
 	m_texture.loadFromFile(pathCrooshairImage);
 	m_sprite.setTexture(m_texture);
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
+	m_sprite.setScale(sf::Vector2f(0.5f, 0.5f));
 }
 
 Crosshair::~Crosshair()
