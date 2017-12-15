@@ -2,18 +2,42 @@
 #define NPC_H
 // ----------------------------------------------------------------------------
 #include "DrawableObject.h"
+#include "Constants.h"
+#include <SFML\Graphics.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-class NPC : public DrawableObject
-{
-public:
-	NPC();
-	~NPC();
+	class NPC : public DrawableObject
+	{
+	private:
+		enum Type
+		{
+			TYPE_BANDIT,
+			TYPE_INNOCENT,
+			TYPE_TOTAL
+		};
+		Type			m_type;
+		uint_t			m_points;
+		bool			m_active;
+		sf::Time		m_activeTime;
+		sf::Time		m_elapsedActiveTime;
+
+		void setTexture();
+		void setType();
+		void showNPC(sf::Time elapsedTime);
+
+	public:
+		NPC();
+		~NPC();
+
+	bool isActive() const { return m_active; }
+	void setActive(bool active) { m_active = active; }
+	uint_t getPoints() const { return m_points; }
+	void update(sf::Time elapsedTime);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }
 // ----------------------------------------------------------------------------
-#endif // NPC_h
-
+#endif // NPC_H
