@@ -1,18 +1,22 @@
-#include "Background.h"
+#include "Screen.h"
 // ----------------------------------------------------------------------------
-#include "Constants.h"
+#include <SFML\Graphics.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-Background::Background()
+Screen::Screen()
+	: m_window(nullptr)
+	, m_nextScreen(nullptr)
 {
-	m_texture.loadFromFile(pathBackgroundImage);
-	m_sprite.setTexture(m_texture);
 }
 
-Background::~Background()
+Screen::~Screen()
 {
 }
+
 // ----------------------------------------------------------------------------
 }
+
+
+

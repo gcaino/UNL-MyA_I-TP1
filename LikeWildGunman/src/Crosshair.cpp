@@ -23,10 +23,5 @@ void Crosshair::move(const sf::RenderWindow& window)
 	m_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 	m_sprite.setPosition(m_position);
 }
-
-void Crosshair::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(m_sprite);
-}
 // ----------------------------------------------------------------------------
 }

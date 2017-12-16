@@ -1,18 +1,28 @@
-#include "Background.h"
+#ifndef SCREEN_MANAGER_H
+#define SCREEN_MANAGER_H
 // ----------------------------------------------------------------------------
-#include "Constants.h"
+#include <stack>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
+class Screen;
 // ----------------------------------------------------------------------------
-Background::Background()
+class ScreenManager
 {
-	m_texture.loadFromFile(pathBackgroundImage);
-	m_sprite.setTexture(m_texture);
-}
+private:
+	std::stack<Screen*>		m_screens;
+	
+public:
+	ScreenManager();
+	~ScreenManager();
 
-Background::~Background()
-{
-}
+	void pushScreen(Screen* screen);
+	void popScreen();
+	Screen* peekScreen();
+	void changeScreen(Screen* screen);
+};
 // ----------------------------------------------------------------------------
 }
+#endif // SCREEN_MANAGER_H
+
+

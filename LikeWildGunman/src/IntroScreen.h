@@ -1,20 +1,24 @@
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
+#ifndef INTRO_SCREEN_H
+#define INTRO_SCREEN_H
 // ----------------------------------------------------------------------------
-#include "DrawableObject.h"
-#include <SFML\Graphics.hpp>
+#include "Screen.h"
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-class Background : public DrawableObject
+class IntroScreen :
+	public Screen
 {
 public:
-	Background();
-	~Background();
+	IntroScreen(sf::RenderWindow* window);
+	~IntroScreen();
+
+	virtual void handleInput();
+	virtual void update(sf::Time elapsedTime);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }
-// ----------------------------------------------------------------------------
-#endif // BACKGROUND_H
+#endif // INTRO_SCREEN_H
+
 

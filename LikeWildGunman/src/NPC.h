@@ -55,7 +55,7 @@ public:
 
 	void shoot(sf::Time elapsedTime, Player& player);
 	void update(sf::Time elapsedTime, Player& player);
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }

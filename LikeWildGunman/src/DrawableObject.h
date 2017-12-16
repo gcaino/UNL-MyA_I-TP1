@@ -18,7 +18,7 @@ public:
 
 	sf::Sprite&	getSprite()  { return m_sprite; }
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }

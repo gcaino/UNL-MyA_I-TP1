@@ -23,6 +23,10 @@ const std::string pathM1GunshotAudio = "assets/audio/m1-garand-gunshot.ogg";
 const std::string pathPoliceChatterAudio = "assets/audio/police-scanner-chatter.ogg";
 const std::string pathShotgunReloadAudio = "assets/audio/shotgun-reload.ogg";
 
+const std::string pathTitleScreenImage = "assets/textures/screen-title-1080.jpg";
+const std::string pathTargetsScreenImage = "assets/textures/target-information-1080.png";
+const std::string pathGameOverScreenImage = "assets/textures/screen-game-over-1080.jpg";
+
 // ----------------------------------------------------------------------------
 }
 // ----------------------------------------------------------------------------

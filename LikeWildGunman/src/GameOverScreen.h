@@ -1,20 +1,21 @@
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
+#ifndef GAMEOVER_SCREEN_H
+#define GAMEOVER_SCREEN_H
 // ----------------------------------------------------------------------------
-#include "DrawableObject.h"
-#include <SFML\Graphics.hpp>
+#include "Screen.h"
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-class Background : public DrawableObject
+class GameOverScreen : public Screen
 {
 public:
-	Background();
-	~Background();
+	GameOverScreen(sf::RenderWindow* window);
+	~GameOverScreen();
+
+	virtual void handleInput();
+	virtual void update(sf::Time elapsedTime);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }
-// ----------------------------------------------------------------------------
-#endif // BACKGROUND_H
-
+#endif // GAMEOVER_SCREEN_H
