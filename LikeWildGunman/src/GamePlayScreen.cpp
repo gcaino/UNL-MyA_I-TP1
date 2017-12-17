@@ -34,7 +34,7 @@ GamePlayScreen::GamePlayScreen(ScreenManager* screenManager)
 
 	for (size_t i = 0; i < MAX_NPC; i++)
 	{
-		// 2 Inocentes y 4 Bandidos, de esa manera evitamos que por probabilidad salgan todos de un solo tipo
+		// 2 Inocentes y 4 Bandidos, de esa manera evitamos que por probabilidad salgan todos de un sólo tipo
 		if (i == 1 || i == 4)
 			m_npcs[i] = new NPC(Type::TYPE_INNOCENT);
 		else
@@ -102,6 +102,8 @@ void GamePlayScreen::spawnNPC(sf::Time elapsedTime)
 
 		m_npcs[randomIndex]->setActive(true);
 		m_npcs[randomIndex]->getSprite().setPosition(m_spawnPoints[randomPoint].m_position);
+		m_npcs[randomIndex]->resetElapsedActiveTime();
+		m_npcs[randomIndex]->resetElapsedTimeShot();
 		m_spawnPoints[randomPoint].m_occupied = true;
 		m_elapsedSpawnTime = sf::Time::Zero;
 	}
@@ -126,6 +128,13 @@ void GamePlayScreen::releaseSpawnPoints()
 	}
 }
 
+void GamePlayScreen::calculateScore()
+{
+	int tempScore = (m_player->getBanditsKilled() - m_player->getInnocentsKilled()) * 10;
+	if (tempScore < 0) tempScore = 0;
+	m_score = tempScore;
+}
+
 void GamePlayScreen::checkCollision()
 {
 	if (m_player->isShooting())
@@ -141,14 +150,16 @@ void GamePlayScreen::checkCollision()
 					if (m_npcs[index]->getType() == Type::TYPE_BANDIT)
 					{
 						m_player->addBanditsKilled();
-						m_player->addScore(m_npcs[index]->getPoints());
+						calculateScore();
+						m_player->addScore(m_score);
 					}
 					else if (m_npcs[index]->getType() == Type::TYPE_INNOCENT)
 					{
 						m_player->addInnocentKilled();
-						m_player->subtractScore(m_npcs[index]->getPoints());
+						calculateScore();
 						m_player->loseLife();
 					}
+					return;
 				}
 				else
 				{
@@ -222,10 +233,8 @@ void GamePlayScreen::update(sf::Time elapsedTime)
 	}
 
 	spawnNPC(elapsedTime);
-
 	for (size_t i = 0; i < MAX_NPC; i++)
 		m_npcs[i]->update(elapsedTime, *m_player);
-
 	releaseSpawnPoints();
 
 	if (!m_pause)

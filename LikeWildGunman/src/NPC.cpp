@@ -12,7 +12,7 @@ namespace lwgm
 NPC::NPC()
 	: m_points(10)
 	, m_active(false)
-	, m_activeTime(sf::seconds(4.f))
+	, m_activeTime(sf::seconds(3.f))
 	, m_elapsedActiveTime(sf::Time::Zero)
 	, m_speedShot(sf::seconds(2.f))
 	, m_elapsedTimeShot(sf::Time::Zero)
@@ -30,7 +30,7 @@ NPC::NPC()
 NPC::NPC(Type type)
 	: m_points(10)
 	, m_active(false)
-	, m_activeTime(sf::seconds(4.f))
+	, m_activeTime(sf::seconds(3.f))
 	, m_elapsedActiveTime(sf::Time::Zero)
 	, m_type(type)
 	, m_speedShot(sf::seconds(2.f))
@@ -128,7 +128,7 @@ void NPC::update(sf::Time elapsedTime, Player& player)
 	if (m_active)
 	{
 		showNPC(elapsedTime);
-		if (m_type == Type::TYPE_BANDIT)
+		if (m_type == Type::TYPE_BANDIT && m_active)
 			shoot(elapsedTime, player);
 	}
 	else

@@ -28,7 +28,7 @@ class GamePlayScreen : public Screen
 {
 private:
 	bool				m_gameOver;
-	uint_t				m_score;
+	int					m_score;
 	bool				m_pause;
 
 	Background*			m_background;
@@ -59,6 +59,7 @@ private:
 	void waitToFinish(sf::Time elapsedTime);
 	void showStartText();
 	void showReloadText();
+	void calculateScore();
 	
 public:
 	GamePlayScreen(ScreenManager* screenManager);

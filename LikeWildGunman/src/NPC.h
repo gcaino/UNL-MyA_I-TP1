@@ -51,6 +51,8 @@ public:
 	Type getType() const { return m_type; }
 	sf::Text getTextShot() const { return m_textShot; }
 	bool getShowText() const { return m_showText; }
+	void resetElapsedTimeShot() { m_elapsedTimeShot = sf::Time::Zero; }
+	void resetElapsedActiveTime() { m_elapsedActiveTime = sf::Time::Zero; }
 
 
 	void shoot(sf::Time elapsedTime, Player& player);

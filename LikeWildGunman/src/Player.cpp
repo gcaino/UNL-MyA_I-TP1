@@ -96,15 +96,8 @@ void Player::obtainLife()
 
 void Player::addScore(uint_t points)
 {
-	m_score += points;
+	m_score = points;
 }
 
-void Player::subtractScore(uint_t points)
-{
-	if (m_score == 0)
-		return;
-
-	m_score -= points;
-}
 // ----------------------------------------------------------------------------
 }

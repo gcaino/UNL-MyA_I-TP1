@@ -42,11 +42,11 @@ public:
 
 	Crosshair* getCrooshair() { return &m_crosshair; }
 	bool isShooting() const { return m_shooting; }
+	void setShooting(bool shooting) { m_shooting = shooting; }
 	uint_t getBullets() const { return m_bullets; }
 	uint_t getLifes() const { return m_lifes; }
 	uint_t getScore() const { return m_score; }
 	void addScore(uint_t points);
-	void subtractScore(uint_t points);
 	void addBanditsKilled() { ++m_banditsKilled; }
 	uint_t getBanditsKilled() const { return m_banditsKilled; }
 	uint_t getInnocentsKilled() const { return m_innocentKilled; }
