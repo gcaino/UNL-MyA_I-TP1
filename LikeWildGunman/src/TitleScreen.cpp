@@ -18,9 +18,9 @@ TitleScreen::~TitleScreen()
 {
 }
 
-void TitleScreen::handleInput()
+void TitleScreen::handleEvent(sf::Event event)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	if (event.key.code == sf::Keyboard::Return)
 		m_nextScreen = new IntroScreen(m_window);
 }
 

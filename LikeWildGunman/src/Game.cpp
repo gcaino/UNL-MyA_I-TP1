@@ -12,10 +12,12 @@ namespace lwgm
 // ----------------------------------------------------------------------------
 Game::Game()
 	: m_running(true)
+	, m_isKeyDown(false)
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH_MAX, WINDOW_HEIGHT_MAX),"M&A I - TP 01");
 	m_window.setFramerateLimit(FPS);
 	m_window.setMouseCursorVisible(false);
+	m_window.setKeyRepeatEnabled(false);
 	m_screenManager.pushScreen(new TitleScreen(&m_window));
 }
 
@@ -37,19 +39,17 @@ void Game::loop()
 			{
 				if (m_event.key.code == sf::Keyboard::Escape)
 					m_running = false;
-				else if (m_event.key.code == sf::Keyboard::Return)
-					m_screenManager.peekScreen()->setNextScreen(new IntroScreen(&m_window));
+				else
+					m_screenManager.peekScreen()->handleEvent(m_event);
 			}
 		}
-		if (m_screenManager.peekScreen()->getNextScreen() != nullptr)
-			m_screenManager.changeScreen(m_screenManager.peekScreen()->getNextScreen());
-
-		m_screenManager.peekScreen()->handleInput();
-
 		m_elapsedTime = m_clock.restart();
 		m_screenManager.peekScreen()->update(m_elapsedTime);
 
 		m_screenManager.peekScreen()->draw(m_window, sf::RenderStates::Default);
+
+		if (m_screenManager.peekScreen()->getNextScreen() != nullptr)
+			m_screenManager.changeScreen(m_screenManager.peekScreen()->getNextScreen());
 	}
 }
 

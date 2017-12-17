@@ -20,7 +20,7 @@ public:
 	Screen* getNextScreen() { return m_nextScreen; }
 	void	setNextScreen(Screen* nextScreen) { m_nextScreen = nextScreen; }
 
-	virtual void handleInput() = 0;
+	virtual void handleEvent(sf::Event event) = 0;
 	virtual void update(sf::Time elapsedTime) = 0;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };

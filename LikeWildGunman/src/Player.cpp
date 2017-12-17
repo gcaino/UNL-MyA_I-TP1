@@ -30,7 +30,7 @@ Player::~Player()
 {
 }
 
-void Player::handlerInput()
+void Player::handleRealTimeInput()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 		!m_shooting &&

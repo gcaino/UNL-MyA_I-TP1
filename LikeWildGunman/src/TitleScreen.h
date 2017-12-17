@@ -12,7 +12,7 @@ public:
 	TitleScreen(sf::RenderWindow* window);
 	~TitleScreen();
 
-	virtual void handleInput();
+	virtual void handleEvent(sf::Event event);
 	virtual void update(sf::Time elapsedTime);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

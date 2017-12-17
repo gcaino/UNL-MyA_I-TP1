@@ -50,7 +50,7 @@ public:
 	sf::Sound& getGunshotSound() { return m_gunshotSound; }
 	sf::Sound& getWhizzingSound() { return m_whizzingSound; }
 
-	void handlerInput();
+	void handleRealTimeInput();
 	void update(sf::Time elapsedTime, const sf::RenderWindow& window);
 };
 // ----------------------------------------------------------------------------

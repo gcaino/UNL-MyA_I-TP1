@@ -18,6 +18,7 @@ private:
 	sf::Time			m_elapsedTime;
 	sf::Clock			m_clock;
 	ScreenManager		m_screenManager;
+	bool				m_isKeyDown;
 
 public:
 	Game();

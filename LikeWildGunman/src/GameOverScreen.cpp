@@ -19,9 +19,9 @@ GameOverScreen::~GameOverScreen()
 {
 }
 
-void GameOverScreen::handleInput()
+void GameOverScreen::handleEvent(sf::Event event)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	if (event.key.code == sf::Keyboard::Return)
 		m_nextScreen = new TitleScreen(m_window);
 }
 

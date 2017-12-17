@@ -19,9 +19,9 @@ IntroScreen::~IntroScreen()
 {
 }
 
-void IntroScreen::handleInput()
+void IntroScreen::handleEvent(sf::Event event)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	if (event.key.code == sf::Keyboard::Return)
 		m_nextScreen = new GamePlayScreen(m_window);
 }
 

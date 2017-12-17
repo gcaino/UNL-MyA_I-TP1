@@ -156,10 +156,8 @@ void GamePlayScreen::checkGameCondition()
 	}
 }
 
-void GamePlayScreen::handleInput()
+void GamePlayScreen::handleEvent(sf::Event event)
 {
-	if (!m_pause)
-		m_player->handlerInput();
 }
 
 void GamePlayScreen::update(sf::Time	elapsedTime)
@@ -170,6 +168,9 @@ void GamePlayScreen::update(sf::Time	elapsedTime)
 		m_npcs[i]->update(elapsedTime, *m_player);
 
 	releaseSpawnPoints();
+
+	if (!m_pause)
+		m_player->handleRealTimeInput();
 
 	m_player->update(elapsedTime, *m_window);
 	checkCollision();
