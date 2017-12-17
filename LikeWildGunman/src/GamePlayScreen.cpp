@@ -140,10 +140,12 @@ void GamePlayScreen::checkCollision()
 					m_player->getGunshotSound().play();
 					if (m_npcs[index]->getType() == Type::TYPE_BANDIT)
 					{
+						m_player->addBanditsKilled();
 						m_player->addScore(m_npcs[index]->getPoints());
 					}
 					else if (m_npcs[index]->getType() == Type::TYPE_INNOCENT)
 					{
+						m_player->addInnocentKilled();
 						m_player->subtractScore(m_npcs[index]->getPoints());
 						m_player->loseLife();
 					}

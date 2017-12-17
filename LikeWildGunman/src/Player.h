@@ -16,6 +16,8 @@ private:
 
 	Crosshair	m_crosshair;
 	uint_t		m_score;
+	uint_t		m_banditsKilled;
+	uint_t		m_innocentKilled;
 	uint_t		m_lifes;
 	uint_t		m_bullets;
 
@@ -45,6 +47,10 @@ public:
 	uint_t getScore() const { return m_score; }
 	void addScore(uint_t points);
 	void subtractScore(uint_t points);
+	void addBanditsKilled() { ++m_banditsKilled; }
+	uint_t getBanditsKilled() const { return m_banditsKilled; }
+	uint_t getInnocentsKilled() const { return m_innocentKilled; }
+	void addInnocentKilled() { ++m_innocentKilled; }
 	void loseLife();
 	void obtainLife();
 	sf::Sound& getGunshotSound() { return m_gunshotSound; }

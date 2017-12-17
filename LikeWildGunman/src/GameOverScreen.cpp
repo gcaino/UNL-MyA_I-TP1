@@ -19,9 +19,11 @@ GameOverScreen::GameOverScreen(ScreenManager* screenManager, Player* player)
 	m_text.setFont(m_font);
 	m_text.setFillColor(sf::Color::White);
 	m_text.setStyle(sf::Text::Bold);
-	m_text.setCharacterSize(30);
-	m_text.setString("YOUR SCORE IS: " + std::to_string(m_player->getScore()));
-	m_text.setPosition(WINDOW_WIDTH_MAX / 2 - m_text.getGlobalBounds().width / 2, WINDOW_HEIGHT_MAX * 0.6f);
+	m_text.setCharacterSize(25);
+	m_text.setString("BANDITS KILLED: " + std::to_string(m_player->getBanditsKilled()) + "\n" +
+					 "INNOCENTS KILLED: " + std::to_string(m_player->getInnocentsKilled()) + "\n\n" +
+					 "YOUR SCORE IS: " + std::to_string(m_player->getScore()));
+	m_text.setPosition(WINDOW_WIDTH_MAX / 2 - m_text.getGlobalBounds().width / 2, WINDOW_HEIGHT_MAX * 0.5f);
 }
 
 
