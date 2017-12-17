@@ -190,6 +190,17 @@ void GamePlayScreen::showStartText()
 	m_startText.setPosition(WINDOW_WIDTH_MAX / 2 - m_startText.getGlobalBounds().width / 2, WINDOW_HEIGHT_MAX * 0.15f);
 }
 
+void GamePlayScreen::showReloadText()
+{
+	if (m_player->getBullets() <= 0)
+		m_hud->getTexts().back()->visible = true;
+	else
+	{
+		if (m_hud->getTexts().back()->visible)
+			m_hud->getTexts().back()->visible = false;
+	}
+}
+
 void GamePlayScreen::handleEvent(sf::Event event)
 {
 }
@@ -219,8 +230,12 @@ void GamePlayScreen::update(sf::Time elapsedTime)
 		m_player->handleRealTimeInput();
 
 	m_player->update(elapsedTime, m_screenManager->getRenderWindow());
+	showReloadText();
+		
 	checkCollision();
+
 	m_hud->updateTexts(*m_player);
+
 	checkGameCondition();
 }
 
@@ -242,7 +257,11 @@ void GamePlayScreen::draw(sf::RenderTarget& target, sf::RenderStates states) con
 		window.draw(m_startText);
 
 	for (size_t i = 0; i < m_hud->getTexts().size(); i++)
-		window.draw(*m_hud->getTexts().at(i));
+	{
+		if (m_hud->getTexts().at(i)->visible)
+			window.draw(m_hud->getTexts().at(i)->text);
+	}
+		
 }
 // ----------------------------------------------------------------------------
 }

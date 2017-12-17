@@ -58,6 +58,7 @@ private:
 	void waitToStart(sf::Time elapsedTime);
 	void waitToFinish(sf::Time elapsedTime);
 	void showStartText();
+	void showReloadText();
 	
 public:
 	GamePlayScreen(ScreenManager* screenManager);

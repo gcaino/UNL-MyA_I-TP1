@@ -6,16 +6,22 @@
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
+struct Text
+{
+	sf::Text	text;
+	bool		visible;
+};
 // ----------------------------------------------------------------------------
 class HUD
 {
 private:
-	sf::Font			m_font;
-	sf::Text			m_bulletsText;
-	sf::Text			m_lifesText;
-	sf::Text			m_scoreText;
+	sf::Font		m_font;		
+	Text			m_bulletsText;
+	Text			m_reloadText;
+	Text			m_lifesText;
+	Text			m_scoreText;
 
-	std::vector<sf::Text*>	m_texts;
+	std::vector<Text*>	m_texts;
 
 	void initTexts();
 	void addTextsToDraw();
@@ -24,7 +30,7 @@ public:
 	HUD();
 	~HUD();
 
-	std::vector<sf::Text*> getTexts() const { return m_texts; }
+	std::vector<Text*> getTexts() const { return m_texts; }
 	void updateTexts(const Player& player);
 };
 // ----------------------------------------------------------------------------
