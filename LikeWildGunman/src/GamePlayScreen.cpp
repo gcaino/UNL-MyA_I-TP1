@@ -9,6 +9,7 @@
 #include "DrawableObject.h"
 #include "Crosshair.h"
 #include "GameOverScreen.h"
+#include "ScreenManager.h"
 #include <SFML\Audio.hpp>
 #include <SFML\Graphics.hpp>
 #include <string>
@@ -16,15 +17,15 @@
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-GamePlayScreen::GamePlayScreen(sf::RenderWindow* window)
-	: m_gameOver(false)
+GamePlayScreen::GamePlayScreen(ScreenManager* screenManager)
+	: Screen(screenManager)
+	, m_gameOver(false)
 	, m_score(0)
 	, m_pause(false)
 	, m_spawnTime(sf::seconds(3.f))
 	, m_elapsedSpawnTime(sf::Time::Zero)
 	, m_spawnPoints{ false, sf::Vector2f() }
 {
-	m_window = window;
 	m_background = new Background();
 	m_player = new Player();
 
@@ -152,7 +153,7 @@ void GamePlayScreen::checkGameCondition()
 	if (m_player->getLifes() == 0)
 	{
 		m_gameOver = true;
-		m_nextScreen = new GameOverScreen(m_window);
+		m_screenManager->changeScreen(new GameOverScreen(m_screenManager));
 	}
 }
 
@@ -172,31 +173,28 @@ void GamePlayScreen::update(sf::Time	elapsedTime)
 	if (!m_pause)
 		m_player->handleRealTimeInput();
 
-	m_player->update(elapsedTime, *m_window);
+	m_player->update(elapsedTime, m_screenManager->getRenderWindow());
 	checkCollision();
-	checkGameCondition();
 	m_hud->updateTexts(*m_player);
+	checkGameCondition();
 }
 
 void GamePlayScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	m_window->clear(sf::Color::White);
-
 	// Funciona pero me quita flexibilidad a la hora de mostrar textos junto a los sprites
 	/*for (m_it = m_drawableObjects.begin(); m_it != m_drawableObjects.end(); m_it++)
 	m_window.draw((*m_it)->getSprite(), sf::RenderStates::Default);*/
+	sf::RenderWindow& window = m_screenManager->getRenderWindow();
 
-	m_background->draw(*m_window, sf::RenderStates::Default);
+	m_background->draw(window, sf::RenderStates::Default);
 
 	for (size_t index = 0; index < MAX_NPC; index++)
-		m_npcs[index]->draw(*m_window, sf::RenderStates::Default);
+		m_npcs[index]->draw(window, sf::RenderStates::Default);
 
-	m_player->getCrooshair()->draw(*m_window, sf::RenderStates::Default);
+	m_player->getCrooshair()->draw(window, sf::RenderStates::Default);
 
 	for (size_t i = 0; i < m_hud->getTexts().size(); i++)
-		m_window->draw(*m_hud->getTexts().at(i));
-
-	m_window->display();
+		window.draw(*m_hud->getTexts().at(i));
 }
 // ----------------------------------------------------------------------------
 }

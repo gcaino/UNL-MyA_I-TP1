@@ -7,22 +7,20 @@
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
+class ScreenManager;
+// ----------------------------------------------------------------------------
 class Screen : public DrawableObject
 {
 protected:
-	sf::RenderWindow*	m_window;
-	Screen*				m_nextScreen;
+	ScreenManager*	m_screenManager;
 
 public:
-	Screen();
+	Screen(ScreenManager* screenManager);
 	virtual ~Screen();
-
-	Screen* getNextScreen() { return m_nextScreen; }
-	void	setNextScreen(Screen* nextScreen) { m_nextScreen = nextScreen; }
 
 	virtual void handleEvent(sf::Event event) = 0;
 	virtual void update(sf::Time elapsedTime) = 0;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 // ----------------------------------------------------------------------------
 }

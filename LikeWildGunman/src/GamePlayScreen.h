@@ -51,7 +51,7 @@ private:
 	void checkGameCondition();
 	
 public:
-	GamePlayScreen(sf::RenderWindow* window);
+	GamePlayScreen(ScreenManager* screenManager);
 	~GamePlayScreen();
 
 	virtual void handleEvent(sf::Event event);

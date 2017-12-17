@@ -2,14 +2,15 @@
 // ----------------------------------------------------------------------------
 #include "Constants.h"
 #include "TitleScreen.h"
+#include "ScreenManager.h"
 #include <SFML\Graphics.hpp>
 // ----------------------------------------------------------------------------
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
-GameOverScreen::GameOverScreen(sf::RenderWindow* window)
+GameOverScreen::GameOverScreen(ScreenManager* screenManager)
+	: Screen(screenManager)
 {
-	m_window = window;
 	m_texture.loadFromFile(pathGameOverScreenImage);
 	m_sprite.setTexture(m_texture);
 }
@@ -22,19 +23,13 @@ GameOverScreen::~GameOverScreen()
 void GameOverScreen::handleEvent(sf::Event event)
 {
 	if (event.key.code == sf::Keyboard::Return)
-		m_nextScreen = new TitleScreen(m_window);
+		m_screenManager->changeScreen(new TitleScreen(m_screenManager));
 }
 
 void GameOverScreen::update(sf::Time elapsedTime)
 {
 }
 
-void GameOverScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	m_window->clear(sf::Color::White);
-	target.draw(m_sprite, states);
-	m_window->display();
-}
 // ----------------------------------------------------------------------------
 }
 
