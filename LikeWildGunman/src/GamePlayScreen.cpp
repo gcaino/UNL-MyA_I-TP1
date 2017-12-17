@@ -179,7 +179,7 @@ void GamePlayScreen::waitToFinish(sf::Time elapsedTime)
 	m_elapsedWaitTime += elapsedTime;
 	if (m_elapsedWaitTime > m_waitTime)
 	{
-		m_screenManager->changeScreen(new GameOverScreen(m_screenManager));
+		m_screenManager->changeScreen(new GameOverScreen(m_screenManager, m_player));
 		m_elapsedWaitTime = sf::Time::Zero;
 	}
 }
