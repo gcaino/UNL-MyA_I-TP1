@@ -24,6 +24,9 @@ class NPC;
 class HUD;
 class DrawableObject;
 // ----------------------------------------------------------------------------
+/**
+* Clase derivada (hereda de Screen), encargada del gameplay del juego.
+*/
 class GamePlayScreen : public Screen
 {
 private:

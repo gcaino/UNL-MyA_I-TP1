@@ -9,6 +9,9 @@ namespace lwgm
 // ----------------------------------------------------------------------------
 const unsigned int	FPS = 60;
 // ----------------------------------------------------------------------------
+/**
+* Clase encargada del loop principal del juego.
+*/
 class Game
 {
 private:

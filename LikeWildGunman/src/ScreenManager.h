@@ -8,6 +8,10 @@ namespace lwgm
 {
 class Screen;
 // ----------------------------------------------------------------------------
+/**
+* Clase cuya responsabilidad es la gestión de todas las clases que representan
+* las distintas pantallas en el flow del juego.
+*/
 class ScreenManager
 {
 private:

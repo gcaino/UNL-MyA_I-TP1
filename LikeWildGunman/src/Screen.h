@@ -9,6 +9,10 @@ namespace lwgm
 // ----------------------------------------------------------------------------
 class ScreenManager;
 // ----------------------------------------------------------------------------
+/**
+* Clase Abstracta de la cual heredan todas las clases que representan pantallas
+* en el flow del juego.
+*/
 class Screen : public DrawableObject
 {
 protected:

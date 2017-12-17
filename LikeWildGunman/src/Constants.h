@@ -6,6 +6,9 @@
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
+/**
+* Constantes Globales, se utilizan en distintas partes del proyecto.
+*/
 typedef unsigned int uint_t;
 
 const uint_t	WINDOW_WIDTH_MAX = 1080;

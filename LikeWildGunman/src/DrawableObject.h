@@ -6,6 +6,9 @@
 namespace lwgm
 {
 // ----------------------------------------------------------------------------
+/**
+ * Clase Base (propia) para los objetos que son dibujables
+ */
 class DrawableObject : sf::Drawable
 {
 protected:
