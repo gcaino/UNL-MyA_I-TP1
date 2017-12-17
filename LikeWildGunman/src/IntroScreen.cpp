@@ -13,6 +13,10 @@ IntroScreen::IntroScreen(ScreenManager* screenManager)
 {
 	m_texture.loadFromFile(pathTargetsScreenImage);
 	m_sprite.setTexture(m_texture);
+
+	m_policeChatterSoundBuffer.loadFromFile(pathPoliceChatterAudio);
+	m_policeChatterSound.setBuffer(m_policeChatterSoundBuffer);
+	m_policeChatterSound.play();
 }
 
 

@@ -43,12 +43,21 @@ private:
 	sf::Time			m_elapsedSpawnTime;
 	sf::Time			m_spawnTime;
 
+	sf::Font			m_font;
+	sf::Text			m_startText;
+	sf::Time			m_elapsedWaitTime;
+	sf::Time			m_waitTime;
+	bool				m_start;
+
 	void addDrawableObjects();
 	void initSpawnPoints();
 	void spawnNPC(sf::Time	elapsedTime);
 	void releaseSpawnPoints();
 	void checkCollision();
 	void checkGameCondition();
+	void waitToStart(sf::Time elapsedTime);
+	void waitToFinish(sf::Time elapsedTime);
+	void showStartText();
 	
 public:
 	GamePlayScreen(ScreenManager* screenManager);

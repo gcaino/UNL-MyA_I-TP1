@@ -22,8 +22,11 @@ GamePlayScreen::GamePlayScreen(ScreenManager* screenManager)
 	, m_gameOver(false)
 	, m_score(0)
 	, m_pause(false)
+	, m_start(false)
 	, m_spawnTime(sf::seconds(3.f))
+	, m_waitTime(sf::Time::Zero)
 	, m_elapsedSpawnTime(sf::Time::Zero)
+	, m_elapsedWaitTime(sf::seconds(4.f))
 	, m_spawnPoints{ false, sf::Vector2f() }
 {
 	m_background = new Background();
@@ -41,6 +44,12 @@ GamePlayScreen::GamePlayScreen(ScreenManager* screenManager)
 	m_hud = new HUD();
 	//addDrawableObjects();
 	initSpawnPoints();
+
+	m_font.loadFromFile(pathFont);
+	m_startText.setFont(m_font);
+	m_startText.setFillColor(sf::Color::White);
+	m_startText.setStyle(sf::Text::Bold);
+	m_startText.setCharacterSize(50);
 }
 
 GamePlayScreen::~GamePlayScreen()
@@ -151,18 +160,54 @@ void GamePlayScreen::checkCollision()
 void GamePlayScreen::checkGameCondition()
 {
 	if (m_player->getLifes() == 0)
-	{
 		m_gameOver = true;
-		m_screenManager->changeScreen(new GameOverScreen(m_screenManager));
+}
+
+void GamePlayScreen::waitToStart(sf::Time elapsedTime)
+{
+	m_elapsedWaitTime -= elapsedTime;
+	if (m_elapsedWaitTime <= m_waitTime)
+	{
+		m_start = true;
+		m_elapsedWaitTime = sf::Time::Zero;
+		m_waitTime = sf::seconds(3.f);
 	}
+}
+
+void GamePlayScreen::waitToFinish(sf::Time elapsedTime)
+{
+	m_elapsedWaitTime += elapsedTime;
+	if (m_elapsedWaitTime > m_waitTime)
+	{
+		m_screenManager->changeScreen(new GameOverScreen(m_screenManager));
+		m_elapsedWaitTime = sf::Time::Zero;
+	}
+}
+
+void GamePlayScreen::showStartText()
+{
+	m_startText.setString("READY " + std::to_string(static_cast<int>(m_elapsedWaitTime.asSeconds())));
+	m_startText.setPosition(WINDOW_WIDTH_MAX / 2 - m_startText.getGlobalBounds().width / 2, WINDOW_HEIGHT_MAX * 0.15f);
 }
 
 void GamePlayScreen::handleEvent(sf::Event event)
 {
 }
 
-void GamePlayScreen::update(sf::Time	elapsedTime)
+void GamePlayScreen::update(sf::Time elapsedTime)
 {
+	if (!m_start)
+	{
+		waitToStart(elapsedTime);
+		showStartText();
+		return;
+	}
+	if (m_gameOver)
+	{
+		waitToFinish(elapsedTime);
+		return;
+	}
+
 	spawnNPC(elapsedTime);
 
 	for (size_t i = 0; i < MAX_NPC; i++)
@@ -192,6 +237,9 @@ void GamePlayScreen::draw(sf::RenderTarget& target, sf::RenderStates states) con
 		m_npcs[index]->draw(window, sf::RenderStates::Default);
 
 	m_player->getCrooshair()->draw(window, sf::RenderStates::Default);
+
+	if (!m_start)
+		window.draw(m_startText);
 
 	for (size_t i = 0; i < m_hud->getTexts().size(); i++)
 		window.draw(*m_hud->getTexts().at(i));
